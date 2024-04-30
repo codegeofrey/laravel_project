@@ -14,7 +14,7 @@
 <tbody>
     
 
-
+ 
     @foreach ($empleados as $datos)
         <tr>
             <td>{{$datos->id}}</td>
