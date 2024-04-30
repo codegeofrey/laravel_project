@@ -13,15 +13,12 @@
 
 <tbody>
     
-    @foreach ($empleados as $datos)
-    <tr>
-        <td>{{$datosx->}}</td>
-        <td><img src="{{asset('storage').'/'.$datos->Foto}}" alt="">   </td>
-    </tr>
+
 
     @foreach ($empleados as $datos)
         <tr>
             <td>{{$datos->id}}</td>
+            <td><img src="{{asset('storage').'/'.$datos->Foto}}" alt="" width="200" height="200"> 
             <td>{{$datos->Foto}}</td>
             <td>{{$datos->Nombres}}</td>
             <td>{{$datos->Primerapel}}</td>
