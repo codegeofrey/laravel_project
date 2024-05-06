@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Storage;
+
 
 class EmpleadoController extends Controller
 {
@@ -19,7 +20,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-      return view('empleados.create');  
+      return view('empleados.create',['modo' => 'Insertar']);  
     }
 
     /**
@@ -36,27 +37,34 @@ class EmpleadoController extends Controller
             $datosempleado['Foto']=$request->file('Foto')->store('uploads','public');
         }
         Empleado::insert($datosempleado);
-        return response()->json($datosempleado);
+        //return response()->json($datosempleado);
+        return redirect('empleados')->with('mensaje','Registro ingresado con exito');
     }
    
     public function edit($id)
     {
-        
-        $empleado = empleado::findOrFail($id);
-        return view('empleados.update', compact('empleado'));
+        //
+        $empleado = Empleado::findOrFail($id);
+        return view('empleados.update', ['modo' => 'Insertar','empleado' => compact('empleado')]);
     }
 
     public function update(Request $request, $id)
     {
+        //
         $datos= request()->except(['_token','_method']);
         Empleado::where('id','=',$id)->update($datos); 
 
-        $empleado = empleado::findOrFail($id);
+        $empleado = Empleado::findOrFail($id);
         return view('empleados.update', compact('empleado'));
     }
 
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
         //
+        $empleado = Empleado::findOrFail($id);
+        if(storage::delete('public/'.$empleado->Foto)){
+            Empleado::destroy($id);
+        }
+        return redirect('empleados')->with('mensaje','Registro ingresado con exito');
     }
 }

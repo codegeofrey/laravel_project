@@ -1,7 +1,14 @@
-FORMULARIO PARA ACTUALIZAR LOS DATOS DE LOS EMPLEADOS
+@extends('layouts.app')
+@section('content') 
+ 
 
-<form action="{{url('/empleados/'. $empleado->id)}}" method="POST" enctype="multipart/form-data">
+
+<div class="container">
+    <a href="{{url('/empleados')}}">Regresar</a>
     @csrf        
     {{method_field('PATCH')}}
-    @include('empleados.form')
+    @include('empleados.form',['modo'=>'Actualizar'])
 </form>   
+</div>
+
+@endsection
